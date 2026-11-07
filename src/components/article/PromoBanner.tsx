@@ -2,10 +2,9 @@ import Image from "next/image";
 import { Link } from "next-view-transitions";
 import { ArrowRight } from "lucide-react";
 
-const DEFAULT_BANNER_IMAGE = "/default-cover.svg";
-
 /**
  * 全宽暗底 Promo Banner：左图 + 右大号 CTA。模板的 image+title+button 横幅复刻。
+ * 没有配图时只显示文字（不回落到任何占位图）。
  */
 export function PromoBanner({
   image,
@@ -20,20 +19,22 @@ export function PromoBanner({
   description: string;
   cta: { href: string; label: string };
 }) {
-  const src = image && image.trim() ? image : DEFAULT_BANNER_IMAGE;
+  const src = image?.trim() ? image : null;
   return (
     <section className="relative isolate overflow-hidden bg-[#0c0c0d] text-white">
-      <div className="grid items-stretch md:grid-cols-2">
-        <div className="relative aspect-[3/2] w-full md:aspect-auto md:min-h-[420px]">
-          <Image
-            src={src}
-            alt=""
-            fill
-            sizes="(min-width: 768px) 50vw, 100vw"
-            className="object-cover"
-          />
-          <div className="absolute inset-0 bg-gradient-to-r from-transparent to-[#0c0c0d]" />
-        </div>
+      <div className={src ? "grid items-stretch md:grid-cols-2" : "grid items-stretch"}>
+        {src && (
+          <div className="relative aspect-[3/2] w-full md:aspect-auto md:min-h-[420px]">
+            <Image
+              src={src}
+              alt=""
+              fill
+              sizes="(min-width: 768px) 50vw, 100vw"
+              className="object-cover"
+            />
+            <div className="absolute inset-0 bg-gradient-to-r from-transparent to-[#0c0c0d]" />
+          </div>
+        )}
 
         <div className="flex flex-col justify-center gap-5 p-8 md:p-14">
           <p className="text-[11px] font-semibold uppercase tracking-[0.2em] text-white/60">
