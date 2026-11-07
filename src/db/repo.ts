@@ -5,8 +5,6 @@ import { articles, articleTags, categories, media, settings, tags } from "./sche
 import { extractExcerpt, extractFirstImage } from "@/lib/content";
 import type { Article as ArticleVO, Category as CategoryVO } from "@/data/types";
 
-const DEFAULT_COVER = "/default-cover.svg";
-
 /* ---------- 转换：DB row → 前端 VO ---------- */
 
 type ArticleRow = typeof articles.$inferSelect;
@@ -41,7 +39,7 @@ async function rowToVO(row: ArticleRow): Promise<ArticleVO> {
     slug: row.slug,
     title: row.title,
     excerpt: row.excerpt,
-    cover: row.cover && row.cover.trim() ? row.cover : DEFAULT_COVER,
+    cover: row.cover?.trim() ? row.cover : undefined,
     coverAlt: row.coverAlt ?? undefined,
     category: cat
       ? toCategoryVO(cat)

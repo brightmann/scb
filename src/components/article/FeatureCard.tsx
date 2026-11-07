@@ -5,22 +5,30 @@ import { CategoryPill } from "@/components/ui/CategoryPill";
 import { ArticleMeta } from "./ArticleMeta";
 import { splitTitle } from "./HighlightTitle";
 import type { Article } from "@/data/types";
+import { cn } from "@/lib/utils";
 
 export function FeatureCard({ article }: { article: Article }) {
   const { highlight, tail } = splitTitle(article.title);
 
   return (
-    <article className="group relative isolate overflow-hidden bg-bg-subtle">
+    <article
+      className={cn(
+        "group relative isolate overflow-hidden",
+        article.cover ? "bg-bg-subtle" : "bg-[#0c0c0d]",
+      )}
+    >
       <Link href={`/blog/${article.slug}`} className="block">
         <div className="relative aspect-[16/10] w-full md:aspect-[3/2]">
-          <Image
-            src={article.cover}
-            alt={article.coverAlt ?? article.title}
-            fill
-            priority
-            sizes="(min-width: 1024px) 66vw, 100vw"
-            className="object-cover transition duration-700 ease-smooth group-hover:scale-[1.04]"
-          />
+          {article.cover && (
+            <Image
+              src={article.cover}
+              alt={article.coverAlt ?? article.title}
+              fill
+              priority
+              sizes="(min-width: 1024px) 66vw, 100vw"
+              className="object-cover transition duration-700 ease-smooth group-hover:scale-[1.04]"
+            />
+          )}
           <div className="absolute inset-0 bg-gradient-to-t from-black/85 via-black/35 to-transparent" />
         </div>
 

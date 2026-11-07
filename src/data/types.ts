@@ -17,7 +17,7 @@ export type Article = {
   slug: string;
   title: string;
   excerpt: string;
-  cover: string;
+  cover?: string;
   coverAlt?: string;
   category: Category;
   tags: string[];

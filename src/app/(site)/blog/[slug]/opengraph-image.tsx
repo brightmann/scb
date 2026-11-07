@@ -11,7 +11,6 @@ export default async function OG({ params }: { params: Promise<{ slug: string }>
   const article = await getArticleVOBySlug(slug);
   const title = article?.title ?? site.name;
   const category = article?.category.name ?? "Article";
-  const author = article?.author.name ?? site.author.name;
 
   return new ImageResponse(
     (
@@ -71,8 +70,6 @@ export default async function OG({ params }: { params: Promise<{ slug: string }>
         >
           {title}
         </div>
-
-        <div style={{ fontSize: 26, opacity: 0.7 }}>by {author}</div>
       </div>
     ),
     { ...size },

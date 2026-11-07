@@ -62,7 +62,7 @@ export function articleJsonLd(article: Article) {
       mainEntityOfPage: { "@type": "WebPage", "@id": url },
       headline: article.title,
       description: stripEmbedText(article.excerpt),
-      image: [`${BASE}${article.cover}`],
+      ...(article.cover ? { image: [`${BASE}${article.cover}`] } : {}),
       datePublished: article.publishedAt,
       dateModified: article.publishedAt,
       inLanguage: site.locale,

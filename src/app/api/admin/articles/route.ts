@@ -56,7 +56,6 @@ export async function POST(req: Request) {
     const id = await createArticle({
       ...parsed.data,
       authorName: site.author.name,
-      authorBio: "写代码、写字、找让自己专注的方法。",
     });
     return NextResponse.json({ data: { id } }, { status: 201 });
   } catch (e) {

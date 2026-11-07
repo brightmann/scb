@@ -24,14 +24,16 @@ export function HeroSide({
         className,
       )}
     >
-      <Image
-        src={article.cover}
-        alt={article.coverAlt ?? article.title}
-        fill
-        priority
-        sizes="(min-width: 1024px) 25vw, 100vw"
-        className="-z-10 object-cover transition duration-700 ease-smooth group-hover:scale-[1.04]"
-      />
+      {article.cover && (
+        <Image
+          src={article.cover}
+          alt={article.coverAlt ?? article.title}
+          fill
+          priority
+          sizes="(min-width: 1024px) 25vw, 100vw"
+          className="-z-10 object-cover transition duration-700 ease-smooth group-hover:scale-[1.04]"
+        />
+      )}
       <div aria-hidden className="absolute inset-0 -z-10 bg-black/35" />
 
       <CategoryPill

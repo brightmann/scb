@@ -20,19 +20,21 @@ export function ArticleRow({
     <article className="group flex flex-col gap-6">
       <CategoryPill category={article.category} variant="solid" className="self-start" />
 
-      <Link
-        href={`/blog/${article.slug}`}
-        className="ring-focus relative block aspect-[16/9] w-full overflow-hidden bg-bg-subtle"
-      >
-        <Image
-          src={article.cover}
-          alt={article.coverAlt ?? article.title}
-          fill
-          priority={priority}
-          sizes="(min-width: 1024px) 880px, 100vw"
-          className="object-cover transition duration-700 ease-smooth group-hover:scale-[1.03]"
-        />
-      </Link>
+      {article.cover && (
+        <Link
+          href={`/blog/${article.slug}`}
+          className="ring-focus relative block aspect-[16/9] w-full overflow-hidden bg-bg-subtle"
+        >
+          <Image
+            src={article.cover}
+            alt={article.coverAlt ?? article.title}
+            fill
+            priority={priority}
+            sizes="(min-width: 1024px) 880px, 100vw"
+            className="object-cover transition duration-700 ease-smooth group-hover:scale-[1.03]"
+          />
+        </Link>
+      )}
 
       <HighlightTitle
         article={article}

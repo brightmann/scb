@@ -9,6 +9,7 @@ import { CategoryPill } from "@/components/ui/CategoryPill";
 import { ArticleMeta } from "./ArticleMeta";
 import { splitTitle } from "./HighlightTitle";
 import type { Article } from "@/data/types";
+import { cn } from "@/lib/utils";
 
 import "swiper/css";
 import "swiper/css/effect-fade";
@@ -42,16 +43,23 @@ export function HeroSlider({ articles }: { articles: Article[] }) {
           const { highlight, tail } = splitTitle(article.title);
           return (
             <SwiperSlide key={article.slug} className="!h-auto">
-              <article className="group relative isolate aspect-[16/10] w-full overflow-hidden bg-bg-subtle md:aspect-[3/2]">
+              <article
+                className={cn(
+                  "group relative isolate aspect-[16/10] w-full overflow-hidden md:aspect-[3/2]",
+                  article.cover ? "bg-bg-subtle" : "bg-[#0c0c0d]",
+                )}
+              >
                 <Link href={`/blog/${article.slug}`} className="block h-full">
-                  <Image
-                    src={article.cover}
-                    alt={article.coverAlt ?? article.title}
-                    fill
-                    priority={idx === 0}
-                    sizes="(min-width: 1024px) 66vw, 100vw"
-                    className="object-cover transition duration-[1200ms] ease-smooth group-hover:scale-[1.04]"
-                  />
+                  {article.cover && (
+                    <Image
+                      src={article.cover}
+                      alt={article.coverAlt ?? article.title}
+                      fill
+                      priority={idx === 0}
+                      sizes="(min-width: 1024px) 66vw, 100vw"
+                      className="object-cover transition duration-[1200ms] ease-smooth group-hover:scale-[1.04]"
+                    />
+                  )}
                   <div className="absolute inset-0 bg-gradient-to-t from-black/85 via-black/40 to-transparent" />
 
                   <div className="absolute inset-x-0 bottom-0 p-6 text-white md:p-10">

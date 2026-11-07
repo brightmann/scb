@@ -18,8 +18,6 @@ export function ArticleMeta({
         className,
       )}
     >
-      <span>By {article.author.name}</span>
-      <span className="mx-2 inline-block h-[3px] w-[3px] translate-y-[-3px] rounded-full bg-current opacity-60" />
       <time dateTime={article.publishedAt} className="normal-case tracking-normal">
         {formatDate(article.publishedAt)}
       </time>

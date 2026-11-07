@@ -57,7 +57,6 @@ export async function generateMetadata({ params }: Props): Promise<Metadata> {
       description,
       images: article.cover ? [{ url: article.cover }] : undefined,
       publishedTime: article.publishedAt,
-      authors: [article.author.name],
       tags: article.tags,
     },
     twitter: {
@@ -118,24 +117,6 @@ export default async function ArticlePage({ params }: Props) {
               {stripEmbedText(article.excerpt)}
             </p>
           )}
-
-          <div className="mt-8 flex items-center gap-3">
-            {article.author.avatar && (
-              <Image
-                src={article.author.avatar}
-                alt={article.author.name}
-                width={40}
-                height={40}
-                className="h-10 w-10 rounded-full object-cover"
-              />
-            )}
-            <div className="text-sm">
-              <p className="font-semibold">{article.author.name}</p>
-              {article.author.bio && (
-                <p className="text-fg-subtle">{article.author.bio}</p>
-              )}
-            </div>
-          </div>
 
           {article.cover && (
             <div className="relative mt-10 aspect-[16/9] w-full overflow-hidden bg-bg-subtle">

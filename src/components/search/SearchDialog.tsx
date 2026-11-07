@@ -14,7 +14,7 @@ type Doc = {
   tags: string;
   category: string;
   publishedAt: string;
-  cover: string;
+  cover?: string;
 };
 
 const FIELDS = ["title", "excerpt", "tags", "category", "body"] as const;
@@ -189,9 +189,11 @@ export function SearchDialog() {
                     }}
                     className="ring-focus group flex items-center gap-4 px-5 py-4 transition hover:bg-bg-subtle"
                   >
-                    <div className="relative aspect-[4/3] w-20 flex-shrink-0 overflow-hidden bg-bg-subtle">
-                      <Image src={r.cover} alt="" fill sizes="80px" className="object-cover" />
-                    </div>
+                    {r.cover && (
+                      <div className="relative aspect-[4/3] w-20 flex-shrink-0 overflow-hidden bg-bg-subtle">
+                        <Image src={r.cover} alt="" fill sizes="80px" className="object-cover" />
+                      </div>
+                    )}
                     <div className="min-w-0 flex-1">
                       <p className="text-[11px] font-semibold uppercase tracking-[0.16em] text-fg-subtle">
                         {r.category}

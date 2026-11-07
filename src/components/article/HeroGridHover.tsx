@@ -31,14 +31,16 @@ export function HeroGridHover({
       <div aria-hidden className="absolute inset-0 z-0">
         {slides.map((a) => (
           <div key={a.slug} className="hero-bg absolute inset-0 transition-opacity duration-500">
-            <Image
-              src={a.cover}
-              alt=""
-              fill
-              priority
-              sizes="(min-width: 1024px) 75vw, 100vw"
-              className="object-cover"
-            />
+            {a.cover && (
+              <Image
+                src={a.cover}
+                alt=""
+                fill
+                priority
+                sizes="(min-width: 1024px) 75vw, 100vw"
+                className="object-cover"
+              />
+            )}
             <div className="absolute inset-0 bg-black/35" />
           </div>
         ))}
