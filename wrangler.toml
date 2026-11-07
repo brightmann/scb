@@ -9,6 +9,7 @@ assets = { directory = ".open-next/assets", binding = "ASSETS" }
 binding = "DB"
 database_name = "scb"
 database_id = "c283f494-297e-4615-9e88-6dd9c581990f"
+migrations_dir = "drizzle"
 
 [[r2_buckets]]
 binding = "MEDIA"

@@ -10,7 +10,7 @@
     "typecheck": "tsc --noEmit",
     "db:generate": "drizzle-kit generate",
     "db:migrate:local": "node scripts/db-migrate-local.mjs",
-    "db:migrate:remote": "wrangler d1 migrations apply blog --remote",
+    "db:migrate:remote": "wrangler d1 migrations apply scb --remote",
     "db:studio": "drizzle-kit studio",
     "db:seed": "tsx scripts/seed.ts",
     "cf:build": "opennextjs-cloudflare build",
