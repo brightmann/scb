@@ -1,4 +1,5 @@
 import { site } from "./site";
+import { stripYoutubeEmbedText } from "./repair-youtube-embeds";
 import type { Article } from "@/data/types";
 
 const BASE = site.url.replace(/\/$/, "");
@@ -60,14 +61,14 @@ export function articleJsonLd(article: Article) {
       "@id": `${url}#article`,
       mainEntityOfPage: { "@type": "WebPage", "@id": url },
       headline: article.title,
-      description: article.excerpt,
+      description: stripYoutubeEmbedText(article.excerpt),
       image: [`${BASE}${article.cover}`],
       datePublished: article.publishedAt,
       dateModified: article.publishedAt,
       inLanguage: site.locale,
       isAccessibleForFree: true,
       wordCount,
-      articleBody: plainBody.slice(0, 5000),
+      articleBody: stripYoutubeEmbedText(plainBody).slice(0, 5000),
       articleSection: article.category.name,
       keywords: article.tags.join(", "),
       author: {

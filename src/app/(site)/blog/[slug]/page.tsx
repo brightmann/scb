@@ -18,6 +18,10 @@ import {
 } from "@/db/repo";
 import { articleJsonLd } from "@/lib/seo";
 import { formatDate, truncate } from "@/lib/utils";
+import {
+  repairYoutubeEmbeds,
+  stripYoutubeEmbedText,
+} from "@/lib/repair-youtube-embeds";
 
 export const dynamic = "force-dynamic";
 
@@ -40,15 +44,17 @@ export async function generateMetadata({ params }: Props): Promise<Metadata> {
   const article = await getArticleVOBySlug(slug);
   if (!article) return {};
   const url = `/blog/${slug}`;
+  // 摘要可能是粘贴的 iframe 代码文本（见 repair-youtube-embeds），显示前去掉
+  const description = truncate(stripYoutubeEmbedText(article.excerpt));
   return {
     title: article.title,
-    description: truncate(article.excerpt),
+    description,
     alternates: { canonical: url },
     openGraph: {
       type: "article",
       url,
       title: article.title,
-      description: truncate(article.excerpt),
+      description,
       images: article.cover ? [{ url: article.cover }] : undefined,
       publishedTime: article.publishedAt,
       authors: [article.author.name],
@@ -57,7 +63,7 @@ export async function generateMetadata({ params }: Props): Promise<Metadata> {
     twitter: {
       card: "summary_large_image",
       title: article.title,
-      description: truncate(article.excerpt),
+      description,
       images: article.cover ? [article.cover] : undefined,
     },
   };
@@ -107,8 +113,10 @@ export default async function ArticlePage({ params }: Props) {
             {tail && <span> {tail}</span>}
           </h1>
 
-          {article.excerpt && (
-            <p className="mt-5 text-lg text-fg-muted">{article.excerpt}</p>
+          {stripYoutubeEmbedText(article.excerpt) && (
+            <p className="mt-5 text-lg text-fg-muted">
+              {stripYoutubeEmbedText(article.excerpt)}
+            </p>
           )}
 
           <div className="mt-8 flex items-center gap-3">
@@ -144,7 +152,7 @@ export default async function ArticlePage({ params }: Props) {
 
           <div
             className="prose prose-neutral mt-12 max-w-prose font-serif text-[1.06rem] leading-[1.78] dark:prose-invert prose-headings:font-sans prose-headings:tracking-tight prose-headings:font-semibold prose-a:text-fg prose-a:underline prose-a:underline-offset-4 prose-a:decoration-border prose-a:decoration-2 hover:prose-a:decoration-fg prose-blockquote:border-l-fg prose-blockquote:bg-transparent prose-blockquote:px-5 prose-blockquote:text-fg prose-blockquote:not-italic prose-code:rounded prose-code:bg-bg-subtle prose-code:px-1.5 prose-code:py-0.5 prose-code:text-[0.9em] prose-code:font-mono prose-code:before:content-none prose-code:after:content-none prose-pre:bg-bg-subtle prose-pre:text-fg"
-            dangerouslySetInnerHTML={{ __html: article.bodyHtml }}
+            dangerouslySetInnerHTML={{ __html: repairYoutubeEmbeds(article.bodyHtml) }}
           />
 
           {article.tags.length > 0 && (

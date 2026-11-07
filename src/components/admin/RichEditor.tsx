@@ -7,6 +7,7 @@ import StarterKit from "@tiptap/starter-kit";
 import Link from "@tiptap/extension-link";
 import Image from "@tiptap/extension-image";
 import Placeholder from "@tiptap/extension-placeholder";
+import Youtube from "@tiptap/extension-youtube";
 import {
   Bold as BoldIcon,
   Italic as ItalicIcon,
@@ -144,6 +145,9 @@ export function RichEditor({
       Image.configure({
         HTMLAttributes: { class: "rounded" },
       }),
+      // 粘贴 YouTube 链接（watch / youtu.be）时直接生成视频节点；
+      // 粘贴原始 <iframe> 嵌入代码时前台渲染层会修补显示（见 repair-youtube-embeds）
+      Youtube.configure({ width: 640, height: 360 }),
       Placeholder.configure({ placeholder, emptyEditorClass: "is-editor-empty" }),
       PasteImageExtension((v) => setUploadingRef.current(v)),
     ],
