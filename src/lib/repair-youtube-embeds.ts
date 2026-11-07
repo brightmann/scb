@@ -75,7 +75,9 @@ export function stripYoutubeEmbedText(text: string): string {
   if (!text) return "";
   const plain = unescapeEntities(text);
   return plain
-    .replace(/<iframe\b[^>]*>[\s\S]*?<\/iframe>/gi, " ")
+    // 摘要常被截断（extractExcerpt 最多 200 字），iframe 标签可能没有
+    // 闭合的 > 或 </iframe>，所以从 <iframe 起删到 </iframe> 或串尾
+    .replace(/<iframe\b[\s\S]*?(?:<\/iframe>|$)/gi, " ")
     .replace(/<iframe\b[^>]*>/gi, " ")
     .replace(/\s+/g, " ")
     .trim();
