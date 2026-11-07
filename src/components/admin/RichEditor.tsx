@@ -146,7 +146,7 @@ export function RichEditor({
         HTMLAttributes: { class: "rounded" },
       }),
       // 粘贴 YouTube 链接（watch / youtu.be）时直接生成视频节点；
-      // 粘贴原始 <iframe> 嵌入代码时前台渲染层会修补显示（见 repair-youtube-embeds）
+      // 粘贴原始 <iframe> 嵌入代码时前台渲染层会修补显示（见 repair-embeds）
       Youtube.configure({ width: 640, height: 360 }),
       Placeholder.configure({ placeholder, emptyEditorClass: "is-editor-empty" }),
       PasteImageExtension((v) => setUploadingRef.current(v)),

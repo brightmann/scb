@@ -19,9 +19,9 @@ import {
 import { articleJsonLd } from "@/lib/seo";
 import { formatDate, truncate } from "@/lib/utils";
 import {
-  repairYoutubeEmbeds,
-  stripYoutubeEmbedText,
-} from "@/lib/repair-youtube-embeds";
+  repairEmbeds,
+  stripEmbedText,
+} from "@/lib/repair-embeds";
 
 export const dynamic = "force-dynamic";
 
@@ -44,8 +44,8 @@ export async function generateMetadata({ params }: Props): Promise<Metadata> {
   const article = await getArticleVOBySlug(slug);
   if (!article) return {};
   const url = `/blog/${slug}`;
-  // 摘要可能是粘贴的 iframe 代码文本（见 repair-youtube-embeds），显示前去掉
-  const description = truncate(stripYoutubeEmbedText(article.excerpt));
+  // 摘要可能是粘贴的 iframe 代码文本（见 repair-embeds），显示前去掉
+  const description = truncate(stripEmbedText(article.excerpt));
   return {
     title: article.title,
     description,
@@ -113,9 +113,9 @@ export default async function ArticlePage({ params }: Props) {
             {tail && <span> {tail}</span>}
           </h1>
 
-          {stripYoutubeEmbedText(article.excerpt) && (
+          {stripEmbedText(article.excerpt) && (
             <p className="mt-5 text-lg text-fg-muted">
-              {stripYoutubeEmbedText(article.excerpt)}
+              {stripEmbedText(article.excerpt)}
             </p>
           )}
 
@@ -152,7 +152,7 @@ export default async function ArticlePage({ params }: Props) {
 
           <div
             className="prose prose-neutral mt-12 max-w-prose font-serif text-[1.06rem] leading-[1.78] dark:prose-invert prose-headings:font-sans prose-headings:tracking-tight prose-headings:font-semibold prose-a:text-fg prose-a:underline prose-a:underline-offset-4 prose-a:decoration-border prose-a:decoration-2 hover:prose-a:decoration-fg prose-blockquote:border-l-fg prose-blockquote:bg-transparent prose-blockquote:px-5 prose-blockquote:text-fg prose-blockquote:not-italic prose-code:rounded prose-code:bg-bg-subtle prose-code:px-1.5 prose-code:py-0.5 prose-code:text-[0.9em] prose-code:font-mono prose-code:before:content-none prose-code:after:content-none prose-pre:bg-bg-subtle prose-pre:text-fg"
-            dangerouslySetInnerHTML={{ __html: repairYoutubeEmbeds(article.bodyHtml) }}
+            dangerouslySetInnerHTML={{ __html: repairEmbeds(article.bodyHtml) }}
           />
 
           {article.tags.length > 0 && (

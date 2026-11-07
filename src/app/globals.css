@@ -159,13 +159,15 @@
 .hero-grid:has(.hero-tile:nth-child(4):hover) .hero-bg:nth-child(4) { opacity: 1; }
 .hero-grid:has(.hero-tile:nth-child(4):hover) .hero-bg:not(:nth-child(4)) { opacity: 0; }
 
-/* YouTube 视频嵌入（Tiptap 视频节点 + 渲染层修补的粘贴嵌入）：16:9 自适应 */
-[data-youtube-video] {
+/* 嵌入（Tiptap 视频节点 + 渲染层修补的粘贴 iframe）：按自身比例自适应 */
+[data-youtube-video],
+[data-embed] {
   position: relative;
   width: 100%;
   aspect-ratio: 16 / 9;
 }
-[data-youtube-video] iframe {
+[data-youtube-video] iframe,
+[data-embed] iframe {
   position: absolute;
   inset: 0;
   width: 100%;
