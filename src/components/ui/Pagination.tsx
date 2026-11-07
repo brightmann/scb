@@ -13,7 +13,12 @@ export function Pagination({
 }) {
   if (totalPages <= 1) return null;
 
-  const href = (n: number) => (n === 1 ? basePath : `${basePath}?page=${n}`);
+  // basePath 可能已带查询串（如 /blog?category=ai），这时用 & 拼 page。
+  const href = (n: number) => {
+    if (n === 1) return basePath;
+    const sep = basePath.includes("?") ? "&" : "?";
+    return `${basePath}${sep}page=${n}`;
+  };
   const items = Array.from({ length: totalPages }, (_, i) => i + 1);
 
   return (
